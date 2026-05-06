@@ -1,0 +1,23 @@
+from docx import Document
+from docx.shared import Pt
+import os
+
+def export_to_word(original_text, jawi_text):
+    os.makedirs("output", exist_ok=True)
+
+    doc = Document()
+    doc.add_heading("Teks Bahasa Melayu ke Tulisan Jawi", level=1)
+
+    doc.add_heading("Teks Asal", level=2)
+    doc.add_paragraph(original_text)
+
+    doc.add_heading("Teks Jawi", level=2)
+    p = doc.add_paragraph()
+    run = p.add_run(jawi_text)
+    run.font.name = "Arial"
+    run.font.size = Pt(16)
+
+    output_path = "output/teks_jawi.docx"
+    doc.save(output_path)
+
+    return output_path
